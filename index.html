@@ -123,6 +123,19 @@
              SCREEN 1: DASHBOARD
              ========================================== -->
         <section class="app-screen active-screen" id="screen-dashboard">
+
+          <!-- ── Dashboard Action Banner (New Bill Quick Button) ── -->
+          <div class="dashboard-action-banner">
+            <div class="dashboard-banner-text">
+              <h2>🏪 Gupta Grocery Mart — POS Terminal</h2>
+              <p>Manage billing, inventory and analytics all in one place</p>
+            </div>
+            <button type="button" class="btn-new-bill-banner" id="btn-dashboard-new-bill">
+              <span class="btn-icon">🛒</span>
+              <span>+ NEW BILL</span>
+            </button>
+          </div>
+
           <!-- Stat Cards -->
           <div class="stat-cards-grid">
             <div class="stat-card card-primary">
@@ -798,7 +811,7 @@
                   <span>Restore from Backup (JSON)</span>
                 </button>
 
-                <hr style="border:none; border-top:1px solid var(--navy-border); margin:8px 0;">
+                <hr style="border:none; border-top:1px solid var(--border-light); margin:8px 0;">
 
                 <button type="button" class="btn-backup btn-backup-reset" id="btn-reset-demo">
                   <span>🔄</span>
@@ -806,8 +819,8 @@
                 </button>
               </div>
 
-              <div style="margin-top:24px; padding:12px; background:rgba(212,175,55,0.08); border:1px solid var(--gold-border); border-radius:var(--radius-md);">
-                <strong style="color:var(--gold-light); font-size:12px; display:block; margin-bottom:4px;">Tax Exemption Notice</strong>
+              <div style="margin-top:24px; padding:12px; background:rgba(197,155,39,0.08); border:1px solid var(--gold-border); border-radius:var(--radius-md);">
+                <strong style="color:var(--gold-dark); font-size:12px; display:block; margin-bottom:4px;">Tax Exemption Notice</strong>
                 <p style="font-size:11px; color:var(--text-secondary); line-height:1.4;">
                   Gupta Grocery Mart operates strictly under Non-GST retail guidelines. All invoices are calculated directly as Rate × Quantity without tax.
                 </p>
@@ -1047,6 +1060,9 @@
     </div>
   </div>
 
+  <!-- Sidebar Mobile Backdrop -->
+  <div id="sidebar-backdrop" style="display:none; position:fixed; inset:0; background:rgba(17,30,51,0.5); z-index:999;"></div>
+
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toast-container"></div>
 
@@ -1067,6 +1083,55 @@
   <script src="js/reports.js"></script>
   <script src="js/settings.js"></script>
   <script src="js/app.js"></script>
+
+  <!-- Mobile Sidebar Toggle -->
+  <script>
+    (function () {
+      var sidebar   = document.getElementById('sidebar');
+      var toggle    = document.getElementById('sidebar-toggle');
+      var backdrop  = document.getElementById('sidebar-backdrop');
+      var newBillBtn = document.getElementById('btn-dashboard-new-bill');
+
+      function openSidebar() {
+        sidebar.classList.add('open');
+        backdrop.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeSidebar() {
+        sidebar.classList.remove('open');
+        backdrop.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+
+      if (toggle) {
+        toggle.addEventListener('click', function () {
+          sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+        });
+      }
+
+      if (backdrop) {
+        backdrop.addEventListener('click', closeSidebar);
+      }
+
+      // Close sidebar when a nav link is clicked on mobile
+      if (sidebar) {
+        sidebar.querySelectorAll('.nav-link').forEach(function (link) {
+          link.addEventListener('click', function () {
+            if (window.innerWidth <= 900) closeSidebar();
+          });
+        });
+      }
+
+      // Dashboard "New Bill" banner button
+      if (newBillBtn) {
+        newBillBtn.addEventListener('click', function () {
+          var billingLink = document.querySelector('.nav-link[data-screen="billing"]');
+          if (billingLink) billingLink.click();
+        });
+      }
+    })();
+  </script>
 
 </body>
 </html>
