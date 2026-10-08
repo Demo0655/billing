@@ -1,0 +1,17 @@
+# Node.js temp files (not part of distribution)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary/scratch
+*.tmp
+*.log

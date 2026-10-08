@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gupta Grocery Mart — Premium Billing & POS Terminal</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/print.css">
+</head>
+<body>
+
+  <!-- Main Application Layout -->
+  <div class="app-layout">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-wrapper">
+          <img src="assets/logo.svg" alt="Gupta Grocery Mart Logo" class="brand-logo-img">
+          <div class="brand-text-col">
+            <span class="brand-name dynamic-store-name">Gupta Grocery Mart</span>
+            <span class="brand-tagline">Retail POS Terminal</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-link active" data-screen="dashboard">
+          <span class="nav-icon">📊</span>
+          <span>Dashboard</span>
+        </a>
+        <a href="#" class="nav-link" data-screen="billing">
+          <span class="nav-icon">🛒</span>
+          <span>New Bill</span>
+          <span class="shortcut-badge">F1</span>
+        </a>
+        <a href="#" class="nav-link" data-screen="products">
+          <span class="nav-icon">📦</span>
+          <span>Products</span>
+        </a>
+        <a href="#" class="nav-link" data-screen="customers">
+          <span class="nav-icon">👥</span>
+          <span>Customers</span>
+        </a>
+        <a href="#" class="nav-link" data-screen="sales">
+          <span class="nav-icon">🧾</span>
+          <span>Sales History</span>
+        </a>
+        <a href="#" class="nav-link" data-screen="reports">
+          <span class="nav-icon">📈</span>
+          <span>Reports</span>
+        </a>
+        <a href="#" class="nav-link" data-screen="settings">
+          <span class="nav-icon">⚙️</span>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <div class="store-snippet">
+          <div class="snippet-address dynamic-store-address">Main Market, Sector 4</div>
+        </div>
+        <div class="system-version">
+          <span>Desktop Edition</span>
+          <span class="version-tag">v2.4.0</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+      
+      <!-- TOP HEADER -->
+      <header class="top-header">
+        <div class="header-left">
+          <button type="button" class="sidebar-toggle-btn" id="sidebar-toggle" aria-label="Toggle Navigation">
+            ☰
+          </button>
+          <h1 class="page-title" id="page-title">Dashboard</h1>
+        </div>
+
+        <div class="header-right">
+          <!-- Live Date & Time -->
+          <div class="live-clock-badge">
+            <span id="header-live-date">—</span>
+            <span class="clock-divider">|</span>
+            <span class="clock-time" id="header-live-time">00:00:00 AM</span>
+          </div>
+
+          <!-- Store Status -->
+          <div class="system-status-indicator">
+            <span class="pulse-dot"></span>
+            <span>Billing System Active</span>
+          </div>
+
+          <!-- Shortcuts Guide Button -->
+          <button type="button" class="header-btn-help" id="btn-help-shortcuts" title="Keyboard Shortcuts Help">
+            <span>⌨️</span>
+            <span>Shortcuts</span>
+          </button>
+
+          <!-- Cashier Profile Pill -->
+          <div class="cashier-badge">
+            <span class="cashier-avatar">👤</span>
+            <div class="cashier-info">
+              <span class="cashier-role">Cashier</span>
+              <span class="cashier-counter">Counter 1</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- CONTENT VIEWPORT -->
+      <main class="content-viewport">
+
+        <!-- ==========================================
+             SCREEN 1: DASHBOARD
+             ========================================== -->
+        <section class="app-screen active-screen" id="screen-dashboard">
+          <!-- Stat Cards -->
+          <div class="stat-cards-grid">
+            <div class="stat-card card-primary">
+              <div class="stat-data">
+                <span class="stat-label">Today's Sales</span>
+                <span class="stat-val gold-text" id="stat-today-sales">₹0.00</span>
+              </div>
+              <div class="stat-icon-wrap">💰</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-data">
+                <span class="stat-label">Today's Bills</span>
+                <span class="stat-val" id="stat-today-bills">0</span>
+              </div>
+              <div class="stat-icon-wrap">🧾</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-data">
+                <span class="stat-label">Total Products</span>
+                <span class="stat-val" id="stat-total-products">0</span>
+              </div>
+              <div class="stat-icon-wrap">📦</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-data">
+                <span class="stat-label">Total Customers</span>
+                <span class="stat-val" id="stat-total-customers">0</span>
+              </div>
+              <div class="stat-icon-wrap">👥</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-data">
+                <span class="stat-label">Avg Bill Value</span>
+                <span class="stat-val" id="stat-avg-bill">₹0.00</span>
+              </div>
+              <div class="stat-icon-wrap">📈</div>
+            </div>
+          </div>
+
+          <!-- Dashboard Charts & Quick Actions -->
+          <div class="dashboard-main-grid">
+            <!-- Sales Chart Card -->
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3 class="section-heading">Sales Overview</h3>
+                <div class="chart-period-tabs">
+                  <button type="button" class="chart-period-btn active" data-period="today">Today</button>
+                  <button type="button" class="chart-period-btn" data-period="week">This Week</button>
+                  <button type="button" class="chart-period-btn" data-period="month">This Month</button>
+                </div>
+              </div>
+              <div class="canvas-container">
+                <canvas id="sales-overview-chart"></canvas>
+              </div>
+            </div>
+
+            <!-- Quick Action Tiles -->
+            <div class="quick-actions-card">
+              <h3 class="section-heading">Quick Actions</h3>
+              <div class="quick-action-btns-list">
+                <button type="button" class="btn-quick-tile" data-navigate="billing">
+                  <span class="quick-tile-icon">🛒</span>
+                  <div class="quick-tile-info">
+                    <strong>Create New Bill</strong>
+                    <small>Open POS billing terminal (F1)</small>
+                  </div>
+                </button>
+                <button type="button" class="btn-quick-tile" onclick="Products.openModal(null)">
+                  <span class="quick-tile-icon">➕</span>
+                  <div class="quick-tile-info">
+                    <strong>Add Grocery Item</strong>
+                    <small>Catalog new product stock</small>
+                  </div>
+                </button>
+                <button type="button" class="btn-quick-tile" data-navigate="reports">
+                  <span class="quick-tile-icon">📊</span>
+                  <div class="quick-tile-info">
+                    <strong>Sales Reports</strong>
+                    <small>View revenue & performance</small>
+                  </div>
+                </button>
+                <button type="button" class="btn-quick-tile" data-navigate="settings">
+                  <span class="quick-tile-icon">💾</span>
+                  <div class="quick-tile-info">
+                    <strong>Backup Application Data</strong>
+                    <small>Export or restore JSON files</small>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Bills Table -->
+          <div class="recent-bills-card">
+            <div class="card-title-row">
+              <h3 class="section-heading">Recent Transactions</h3>
+              <button type="button" class="btn-royal-sm" data-navigate="sales">View All Invoices →</button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Bill No.</th>
+                    <th>Customer</th>
+                    <th>Date & Time</th>
+                    <th>Items</th>
+                    <th>Amount</th>
+                    <th>Payment</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="recent-bills-tbody">
+                  <!-- Populated by JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SCREEN 2: NEW BILL (POS TERMINAL)
+             ========================================== -->
+        <section class="app-screen" id="screen-billing">
+          <div class="pos-container">
+            
+            <!-- Left Side: Bill Inputs & Table -->
+            <div class="pos-left-panel">
+              <!-- Top Section: Bill Information -->
+              <div class="bill-meta-bar">
+                <div class="pos-input-group">
+                  <label class="pos-label" for="bill-no">Bill No.</label>
+                  <input type="text" id="bill-no" class="pos-input input-readonly" readonly value="GGM-000001">
+                </div>
+
+                <div class="pos-input-group" id="cust-autocomplete-wrapper">
+                  <label class="pos-label" for="cust-name">Customer Name (Optional)</label>
+                  <input type="text" id="cust-name" class="pos-input" placeholder="e.g. Aman Verma" autocomplete="off">
+                  <div class="autocomplete-flyout hidden" id="cust-suggestions"></div>
+                </div>
+
+                <div class="pos-input-group">
+                  <label class="pos-label" for="cust-phone">Mobile Number (Optional)</label>
+                  <input type="tel" id="cust-phone" class="pos-input" placeholder="e.g. 9823456789" maxlength="15">
+                </div>
+
+                <div class="pos-input-group">
+                  <label class="pos-label" for="bill-date">Date & Time</label>
+                  <input type="date" id="bill-date" class="pos-input">
+                  <input type="hidden" id="bill-time">
+                </div>
+              </div>
+
+              <!-- Product Search & USB Barcode Scanner Input -->
+              <div class="pos-search-wrapper" id="pos-search-wrapper">
+                <div class="search-input-box">
+                  <span class="search-icon-symbol">🔍</span>
+                  <input type="text" id="pos-search-input" class="pos-main-search-input" 
+                         placeholder="Search product by name or barcode... (Press F2 or scan barcode)" 
+                         autocomplete="off" autofocus>
+                  <span class="search-shortcut-hint">F2 / Barcode Enter</span>
+                </div>
+                <div class="search-dropdown-menu hidden" id="pos-search-dropdown"></div>
+              </div>
+
+              <!-- Quick Picks Bar -->
+              <div class="quick-picks-bar">
+                <span class="quick-picks-label">Quick Staples:</span>
+                <div id="quick-picks-container" style="display:flex; gap:8px;"></div>
+              </div>
+
+              <!-- Bill Items Table -->
+              <div class="pos-table-card">
+                <div class="pos-table-header">
+                  <span class="table-title">Cart Items</span>
+                  <span class="badge-bills" id="pos-item-count-badge">0 items</span>
+                </div>
+                <div class="pos-table-wrapper">
+                  <table class="pos-items-table">
+                    <thead>
+                      <tr>
+                        <th class="col-index">#</th>
+                        <th class="col-product">Product Description</th>
+                        <th class="col-qty">Quantity</th>
+                        <th class="col-unit">Unit</th>
+                        <th class="col-rate">Rate (₹)</th>
+                        <th class="col-amount">Amount (₹)</th>
+                        <th class="col-action">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="pos-items-tbody">
+                      <!-- Populated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Side: Bill Summary Card -->
+            <div class="pos-right-summary">
+              <div class="summary-heading-box">
+                <h3 class="summary-title">Bill Summary</h3>
+                <span class="badge-category" style="font-size:10px;">Zero GST</span>
+              </div>
+
+              <div class="calc-rows-container">
+                <div class="calc-row">
+                  <span>Subtotal</span>
+                  <span class="calc-row-val" id="summary-subtotal">₹0.00</span>
+                </div>
+
+                <!-- Discount Input -->
+                <div class="discount-control-wrap">
+                  <div class="discount-input-row">
+                    <span style="font-size:12px; color:var(--text-secondary);">Discount</span>
+                    <div class="discount-input-box">
+                      <span class="currency-prefix">₹</span>
+                      <input type="number" id="summary-discount" min="0" step="any" value="0">
+                    </div>
+                  </div>
+                  <div class="discount-presets">
+                    <button type="button" class="discount-pill" data-discount="0">₹0</button>
+                    <button type="button" class="discount-pill" data-discount="10">₹10</button>
+                    <button type="button" class="discount-pill" data-discount="20">₹20</button>
+                    <button type="button" class="discount-pill" data-discount="50">₹50</button>
+                    <button type="button" class="discount-pill" data-discount="100">₹100</button>
+                  </div>
+                </div>
+
+                <!-- Grand Total Box -->
+                <div class="grand-total-hero">
+                  <div class="grand-total-label">Grand Total</div>
+                  <div class="grand-total-amount" id="summary-grand-total">₹0.00</div>
+                </div>
+
+                <!-- Payment Details -->
+                <div class="payment-details-box">
+                  <div class="pos-input-group">
+                    <label class="pos-label" for="summary-payment-method">Payment Method</label>
+                    <select id="summary-payment-method" class="summary-select">
+                      <option value="Cash">Cash</option>
+                      <option value="UPI">UPI (GPay / PhonePe / Paytm)</option>
+                      <option value="Card">Card (Debit / Credit)</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+
+                  <div class="amount-received-wrap">
+                    <label class="pos-label" for="summary-amount-received">Amount Received</label>
+                    <div class="amount-recv-input-box">
+                      <span class="currency-prefix">₹</span>
+                      <input type="number" id="summary-amount-received" min="0" step="any" placeholder="0">
+                    </div>
+                  </div>
+
+                  <div class="change-display-row hidden" id="summary-change-row">
+                    <span class="pos-label" id="summary-change-label">Change to Return:</span>
+                    <span class="change-amount-display change-positive" id="summary-change-amount">₹0.00</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Buttons Stack -->
+              <div class="pos-actions-stack">
+                <button type="button" class="btn-pos-primary" id="btn-save-bill">
+                  <span>💾</span>
+                  <span>SAVE BILL</span>
+                  <span class="btn-key-hint">F3</span>
+                </button>
+
+                <button type="button" class="btn-pos-secondary" id="btn-save-print">
+                  <span>🖨️</span>
+                  <span>SAVE &amp; PRINT</span>
+                  <span class="btn-key-hint">F4</span>
+                </button>
+
+                <div class="btn-pos-sub-row">
+                  <button type="button" class="btn-pos-outline" id="btn-export-pdf">
+                    <span>📄</span>
+                    <span>EXPORT PDF</span>
+                    <span class="btn-key-hint">F5</span>
+                  </button>
+                  <button type="button" class="btn-pos-outline" id="btn-whatsapp">
+                    <span>💬</span>
+                    <span>WHATSAPP</span>
+                    <span class="btn-key-hint">F6</span>
+                  </button>
+                </div>
+
+                <button type="button" class="btn-pos-clear" id="btn-clear-bill">
+                  <span>🗑️</span>
+                  <span>CLEAR BILL</span>
+                  <span class="btn-key-hint">ESC</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SCREEN 3: PRODUCTS MANAGEMENT
+             ========================================== -->
+        <section class="app-screen" id="screen-products">
+          <div class="catalog-card">
+            <div class="catalog-toolbar">
+              <div class="toolbar-search-box">
+                <span>🔍</span>
+                <input type="text" id="products-search" class="toolbar-search-input" placeholder="Search product name, category, or barcode...">
+              </div>
+
+              <div class="toolbar-filters">
+                <select id="products-category-filter" class="select-filter">
+                  <option value="">All Categories</option>
+                  <option value="Staples & Flour">Staples & Flour</option>
+                  <option value="Spices & Salt">Spices & Salt</option>
+                  <option value="Edible Oils">Edible Oils</option>
+                  <option value="Beverages">Beverages</option>
+                  <option value="Snacks & Biscuits">Snacks & Biscuits</option>
+                  <option value="Instant Foods">Instant Foods</option>
+                  <option value="Staples">Staples</option>
+                  <option value="Rice & Grains">Rice & Grains</option>
+                  <option value="Pulses & Dals">Pulses & Dals</option>
+                  <option value="Household & Cleaning">Household & Cleaning</option>
+                  <option value="Dairy & Ghee">Dairy & Ghee</option>
+                  <option value="Personal Care">Personal Care</option>
+                </select>
+
+                <select id="products-stock-filter" class="select-filter">
+                  <option value="">All Stock Levels</option>
+                  <option value="in_stock">In Stock (&gt;10)</option>
+                  <option value="low_stock">Low Stock (≤10)</option>
+                  <option value="out_of_stock">Out of Stock</option>
+                </select>
+
+                <button type="button" class="btn-royal-gold" id="btn-add-product-modal">
+                  + Add Product
+                </button>
+              </div>
+            </div>
+
+            <div class="table-title-row" style="margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+              <span class="text-secondary" style="font-size:12px;">Product Catalog</span>
+              <span class="badge-bills" id="products-total-count">0 products</span>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Barcode</th>
+                    <th>Unit</th>
+                    <th>Selling Price</th>
+                    <th>Stock</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="products-tbody">
+                  <!-- Populated by products.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SCREEN 4: CUSTOMER DIRECTORY
+             ========================================== -->
+        <section class="app-screen" id="screen-customers">
+          <div class="catalog-card">
+            <div class="catalog-toolbar">
+              <div class="toolbar-search-box">
+                <span>🔍</span>
+                <input type="text" id="customers-search" class="toolbar-search-input" placeholder="Search customer by name, mobile, address...">
+              </div>
+
+              <div class="toolbar-filters">
+                <button type="button" class="btn-royal-gold" id="btn-add-customer-modal">
+                  + Add Customer
+                </button>
+              </div>
+            </div>
+
+            <div class="table-title-row" style="margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+              <span class="text-secondary" style="font-size:12px;">Registered Customers</span>
+              <span class="badge-bills" id="customers-total-count">0 registered</span>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Customer Name</th>
+                    <th>Mobile</th>
+                    <th>Address</th>
+                    <th>Total Bills</th>
+                    <th>Total Purchases</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="customers-tbody">
+                  <!-- Populated by customers.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SCREEN 5: SALES HISTORY
+             ========================================== -->
+        <section class="app-screen" id="screen-sales">
+          <div class="catalog-card">
+            <div class="catalog-toolbar">
+              <div class="toolbar-search-box">
+                <span>🔍</span>
+                <input type="text" id="sales-search" class="toolbar-search-input" placeholder="Search by Bill No, Customer Name, or Phone...">
+              </div>
+
+              <div class="toolbar-filters">
+                <select id="sales-period-filter" class="select-filter">
+                  <option value="all">All Dates</option>
+                  <option value="today">Today</option>
+                  <option value="yesterday">Yesterday</option>
+                  <option value="week">This Week</option>
+                  <option value="month">This Month</option>
+                  <option value="custom">Custom Date Range</option>
+                </select>
+
+                <div class="hidden" id="sales-custom-date-wrap" style="display:inline-flex; gap:6px;">
+                  <input type="date" id="sales-date-from" class="select-filter">
+                  <input type="date" id="sales-date-to" class="select-filter">
+                </div>
+              </div>
+            </div>
+
+            <div class="table-title-row" style="margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+              <div style="display:flex; gap:12px; align-items:center;">
+                <span class="text-secondary" style="font-size:12px;">Invoices Generated</span>
+                <span class="badge-bills" id="sales-total-count">0 bills</span>
+              </div>
+              <div>
+                <span style="font-size:12px; color:var(--text-secondary); margin-right:6px;">Total Invoiced:</span>
+                <strong class="text-gold" id="sales-total-revenue">₹0.00</strong>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Bill No.</th>
+                    <th>Date &amp; Time</th>
+                    <th>Customer</th>
+                    <th>Items</th>
+                    <th>Amount</th>
+                    <th>Payment</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="sales-tbody">
+                  <!-- Populated by sales.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SCREEN 6: REPORTS & PERFORMANCE
+             ========================================== -->
+        <section class="app-screen" id="screen-reports">
+          <!-- Reports Stats Grid -->
+          <div class="stat-cards-grid">
+            <div class="stat-card">
+              <div class="stat-data">
+                <span class="stat-label">Today's Sales</span>
+                <span class="stat-val gold-text" id="rep-today-sales">₹0.00</span>
+              </div>
+              <div class="stat-icon-wrap">☀️</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-data">
+                <span class="stat-label">This Week</span>
+                <span class="stat-val" id="rep-weekly-sales">₹0.00</span>
+              </div>
+              <div class="stat-icon-wrap">📅</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-data">
+                <span class="stat-label">This Month</span>
+                <span class="stat-val" id="rep-monthly-sales">₹0.00</span>
+              </div>
+              <div class="stat-icon-wrap">🗓️</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-data">
+                <span class="stat-label">Total Bills</span>
+                <span class="stat-val" id="rep-total-bills">0</span>
+              </div>
+              <div class="stat-icon-wrap">🧾</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-data">
+                <span class="stat-label">Average Bill</span>
+                <span class="stat-val" id="rep-avg-bill">₹0.00</span>
+              </div>
+              <div class="stat-icon-wrap">📊</div>
+            </div>
+
+            <div class="stat-card card-primary">
+              <div class="stat-data">
+                <span class="stat-label">Gross Revenue</span>
+                <span class="stat-val gold-text" id="rep-total-revenue">₹0.00</span>
+              </div>
+              <div class="stat-icon-wrap">💎</div>
+            </div>
+          </div>
+
+          <!-- Split Reports Analysis -->
+          <div class="reports-grid">
+            <!-- Top Selling Products -->
+            <div class="top-products-card">
+              <h3 class="section-heading" style="margin-bottom:14px;">Top Selling Products</h3>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Rank</th>
+                      <th>Product Name</th>
+                      <th>Qty Sold</th>
+                      <th class="text-right">Revenue</th>
+                    </tr>
+                  </thead>
+                  <tbody id="rep-top-products-tbody">
+                    <!-- Populated by reports.js -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Payment Method Analysis -->
+            <div class="payment-analysis-card">
+              <h3 class="section-heading">Payment Modes Breakdown</h3>
+              <div class="payment-analysis-flex">
+                <div style="width:180px; height:180px; flex-shrink:0;">
+                  <canvas id="rep-payment-chart"></canvas>
+                </div>
+                <div class="payment-stats-list" id="rep-payment-list">
+                  <!-- Populated by reports.js -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SCREEN 7: SETTINGS & BACKUP
+             ========================================== -->
+        <section class="app-screen" id="screen-settings">
+          <div class="settings-layout-grid">
+            
+            <!-- Store Profile & POS Options -->
+            <div class="settings-card">
+              <h3 class="section-heading">Store Profile &amp; POS Setup</h3>
+              <p style="font-size:12px; color:var(--text-muted); margin-bottom:16px;">
+                Configure store branding printed on invoices and thermal receipts. No GST calculations are active.
+              </p>
+
+              <form id="settings-form">
+                <div class="settings-form-grid">
+                  <div class="form-field form-full-width">
+                    <label class="form-label" for="set-store-name">Store Name</label>
+                    <input type="text" id="set-store-name" class="form-control" required value="Gupta Grocery Mart">
+                  </div>
+
+                  <div class="form-field form-full-width">
+                    <label class="form-label" for="set-tagline">Tagline / Subtitle</label>
+                    <input type="text" id="set-tagline" class="form-control" value="Premium Grocery Store">
+                  </div>
+
+                  <div class="form-field form-full-width">
+                    <label class="form-label" for="set-address">Store Address</label>
+                    <input type="text" id="set-address" class="form-control" value="Shop No. 14, Main Market, Sector 4, Near Clock Tower">
+                  </div>
+
+                  <div class="form-field">
+                    <label class="form-label" for="set-phone">Phone Number</label>
+                    <input type="text" id="set-phone" class="form-control" value="+91 98765 43210">
+                  </div>
+
+                  <div class="form-field">
+                    <label class="form-label" for="set-whatsapp">WhatsApp Number</label>
+                    <input type="text" id="set-whatsapp" class="form-control" value="+91 98765 43210">
+                  </div>
+
+                  <div class="form-field form-full-width">
+                    <label class="form-label" for="set-email">Email Address</label>
+                    <input type="email" id="set-email" class="form-control" value="contact@guptagrocerymart.com">
+                  </div>
+
+                  <div class="form-field form-full-width">
+                    <label class="form-label" for="set-footer-msg">Invoice Footer Greeting</label>
+                    <input type="text" id="set-footer-msg" class="form-control" value="Thank You For Shopping With Us! Please Visit Again">
+                  </div>
+
+                  <div class="form-field">
+                    <label class="form-label" for="set-invoice-prefix">Invoice Prefix</label>
+                    <input type="text" id="set-invoice-prefix" class="form-control" value="GGM-">
+                  </div>
+
+                  <div class="form-field">
+                    <label class="form-label" for="set-default-payment">Default Payment Mode</label>
+                    <select id="set-default-payment" class="form-control">
+                      <option value="Cash">Cash</option>
+                      <option value="UPI">UPI</option>
+                      <option value="Card">Card</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+
+                  <div class="form-field">
+                    <label class="form-label" for="set-receipt-format">Receipt Paper Format</label>
+                    <select id="set-receipt-format" class="form-control">
+                      <option value="thermal">POS Thermal Receipt (80mm)</option>
+                      <option value="standard">Standard Full Page (A4)</option>
+                    </select>
+                  </div>
+
+                  <div class="form-field" style="justify-content:center;">
+                    <label class="form-label" style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                      <input type="checkbox" id="set-sound-enabled" checked style="width:18px; height:18px; accent-color:var(--gold-primary);">
+                      <span>Enable POS Barcode &amp; Cashier Beep Chimes</span>
+                    </label>
+                  </div>
+
+                  <div class="form-field form-full-width" style="margin-top:10px;">
+                    <button type="submit" class="btn-pos-primary" style="align-self:flex-start;">
+                      💾 Save Store Settings
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- Backup & Data Persistence -->
+            <div class="settings-card">
+              <h3 class="section-heading">Data Backup &amp; Recovery</h3>
+              <p style="font-size:12px; color:var(--text-muted); margin-bottom:14px;">
+                Since this application operates purely in your browser, export regular backups to protect against local data wipes.
+              </p>
+
+              <div class="backup-actions-box">
+                <button type="button" class="btn-backup btn-backup-export" id="btn-export-backup">
+                  <span>📥</span>
+                  <span>Export Backup (JSON)</span>
+                </button>
+
+                <input type="file" id="file-import-backup" accept=".json" class="hidden">
+                <button type="button" class="btn-backup btn-backup-import" id="btn-trigger-import">
+                  <span>📤</span>
+                  <span>Restore from Backup (JSON)</span>
+                </button>
+
+                <hr style="border:none; border-top:1px solid var(--navy-border); margin:8px 0;">
+
+                <button type="button" class="btn-backup btn-backup-reset" id="btn-reset-demo">
+                  <span>🔄</span>
+                  <span>Reset Demo Data</span>
+                </button>
+              </div>
+
+              <div style="margin-top:24px; padding:12px; background:rgba(212,175,55,0.08); border:1px solid var(--gold-border); border-radius:var(--radius-md);">
+                <strong style="color:var(--gold-light); font-size:12px; display:block; margin-bottom:4px;">Tax Exemption Notice</strong>
+                <p style="font-size:11px; color:var(--text-secondary); line-height:1.4;">
+                  Gupta Grocery Mart operates strictly under Non-GST retail guidelines. All invoices are calculated directly as Rate × Quantity without tax.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODALS
+       ========================================== -->
+
+  <!-- Add / Edit Product Modal (ZERO GST) -->
+  <div class="modal-overlay hidden" id="product-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="product-modal-title">Add Grocery Product</h3>
+        <button type="button" class="modal-close-btn" onclick="Products.closeModal()">&times;</button>
+      </div>
+      <form id="product-form">
+        <div class="modal-body">
+          <div class="form-field" style="margin-bottom:12px;">
+            <label class="form-label" for="prod-name">Product Name *</label>
+            <input type="text" id="prod-name" class="form-control" required placeholder="e.g. Aashirvaad Atta 5kg">
+          </div>
+
+          <div class="form-field" style="margin-bottom:12px;">
+            <label class="form-label" for="prod-category">Category</label>
+            <select id="prod-category" class="form-control">
+              <option value="Staples & Flour">Staples & Flour</option>
+              <option value="Spices & Salt">Spices & Salt</option>
+              <option value="Edible Oils">Edible Oils</option>
+              <option value="Beverages">Beverages</option>
+              <option value="Snacks & Biscuits">Snacks & Biscuits</option>
+              <option value="Instant Foods">Instant Foods</option>
+              <option value="Staples">Staples</option>
+              <option value="Rice & Grains">Rice & Grains</option>
+              <option value="Pulses & Dals">Pulses & Dals</option>
+              <option value="Household & Cleaning">Household & Cleaning</option>
+              <option value="Dairy & Ghee">Dairy & Ghee</option>
+              <option value="Personal Care">Personal Care</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-field" style="margin-bottom:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <label class="form-label" for="prod-barcode">Barcode (Optional)</label>
+              <button type="button" class="btn-royal-sm" id="btn-gen-barcode">Generate Code</button>
+            </div>
+            <input type="text" id="prod-barcode" class="form-control" placeholder="Scan or enter barcode...">
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
+            <div class="form-field">
+              <label class="form-label" for="prod-unit">Unit</label>
+              <select id="prod-unit" class="form-control">
+                <option value="PKT">PKT</option>
+                <option value="KG">KG</option>
+                <option value="GM">GM</option>
+                <option value="LTR">LTR</option>
+                <option value="BTL">BTL</option>
+                <option value="PCS">PCS</option>
+                <option value="TIN">TIN</option>
+                <option value="BAG">BAG</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="prod-price">Selling Price (₹) *</label>
+              <input type="number" id="prod-price" class="form-control" min="0" step="any" required placeholder="0.00">
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="prod-stock">Opening Stock</label>
+              <input type="number" id="prod-stock" class="form-control" min="0" step="any" value="50">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-pos-clear" id="btn-product-cancel">Cancel</button>
+          <button type="submit" class="btn-royal-gold">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add / Edit Customer Modal -->
+  <div class="modal-overlay hidden" id="customer-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="customer-modal-title">Add New Customer</h3>
+        <button type="button" class="modal-close-btn" onclick="Customers.closeModal()">&times;</button>
+      </div>
+      <form id="customer-form">
+        <div class="modal-body">
+          <div class="form-field" style="margin-bottom:12px;">
+            <label class="form-label" for="cust-modal-name">Customer Full Name *</label>
+            <input type="text" id="cust-modal-name" class="form-control" required placeholder="e.g. Aman Verma">
+          </div>
+
+          <div class="form-field" style="margin-bottom:12px;">
+            <label class="form-label" for="cust-modal-phone">Mobile Phone</label>
+            <input type="tel" id="cust-modal-phone" class="form-control" placeholder="e.g. 9823456789">
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="cust-modal-address">Address (Optional)</label>
+            <input type="text" id="cust-modal-address" class="form-control" placeholder="House/Flat, Street, Area">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-pos-clear" id="btn-customer-cancel">Cancel</button>
+          <button type="submit" class="btn-royal-gold">Save Customer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Customer History Modal -->
+  <div class="modal-overlay hidden" id="customer-history-modal">
+    <div class="modal-dialog modal-dialog-wide">
+      <div class="modal-header">
+        <h3 class="modal-title" id="customer-history-title">Customer Purchase History</h3>
+        <button type="button" class="modal-close-btn" onclick="Customers.closeHistoryModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Bill No.</th>
+                <th>Date &amp; Time</th>
+                <th>Items Count</th>
+                <th>Amount</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="customer-history-tbody">
+              <!-- Populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-pos-outline" id="btn-close-customer-history">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bill Detail Modal -->
+  <div class="modal-overlay hidden" id="bill-detail-modal">
+    <div class="modal-dialog modal-dialog-wide">
+      <div class="modal-header">
+        <h3 class="modal-title">Invoice Details</h3>
+        <button type="button" class="modal-close-btn" onclick="Sales.closeBillDetail()">&times;</button>
+      </div>
+      <div class="modal-body" id="bill-detail-content">
+        <!-- Rendered by sales.js -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-pos-outline" id="btn-modal-whatsapp">💬 WhatsApp</button>
+        <button type="button" class="btn-pos-outline" id="btn-modal-pdf">📄 PDF</button>
+        <button type="button" class="btn-royal-gold" id="btn-modal-print">🖨️ Print Invoice</button>
+        <button type="button" class="btn-pos-clear" id="btn-close-bill-detail">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Keyboard Shortcuts Cheat-sheet Modal -->
+  <div class="modal-overlay hidden" id="shortcuts-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">POS Keyboard Shortcuts</h3>
+        <button type="button" class="modal-close-btn" id="btn-close-shortcuts">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="shortcuts-grid">
+          <div class="shortcut-item">
+            <span>New Bill Terminal</span>
+            <kbd class="shortcut-key-kbd">F1</kbd>
+          </div>
+          <div class="shortcut-item">
+            <span>Focus Product Search</span>
+            <kbd class="shortcut-key-kbd">F2</kbd>
+          </div>
+          <div class="shortcut-item">
+            <span>Save Bill</span>
+            <kbd class="shortcut-key-kbd">F3</kbd>
+          </div>
+          <div class="shortcut-item">
+            <span>Save &amp; Print</span>
+            <kbd class="shortcut-key-kbd">F4</kbd>
+          </div>
+          <div class="shortcut-item">
+            <span>Export Invoice PDF</span>
+            <kbd class="shortcut-key-kbd">F5</kbd>
+          </div>
+          <div class="shortcut-item">
+            <span>Share on WhatsApp</span>
+            <kbd class="shortcut-key-kbd">F6</kbd>
+          </div>
+          <div class="shortcut-item">
+            <span>Close Modal / Clear</span>
+            <kbd class="shortcut-key-kbd">ESC</kbd>
+          </div>
+          <div class="shortcut-item">
+            <span>USB Barcode Scanner</span>
+            <kbd class="shortcut-key-kbd">Auto Enter</kbd>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-royal-gold" onclick="document.getElementById('shortcuts-modal').classList.add('hidden')">Got It</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal-overlay hidden" id="confirm-modal">
+    <div class="modal-dialog" style="max-width:440px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="confirm-modal-title">Confirm Action</h3>
+      </div>
+      <div class="modal-body">
+        <p id="confirm-modal-message" style="color:var(--text-primary); font-size:13.5px; line-height:1.5;">Are you sure?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-pos-outline" id="btn-confirm-cancel">Cancel</button>
+        <button type="button" class="btn-pos-primary" id="btn-confirm-ok">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Printable Invoice Container (Visible only during window.print()) -->
+  <div id="printable-invoice-container"></div>
+
+  <!-- Vendor & Application Scripts -->
+  <script src="js/vendor/jspdf.umd.min.js"></script>
+  <script src="js/vendor/jspdf.plugin.autotable.min.js"></script>
+
+  <script src="js/database.js"></script>
+  <script src="js/pdf.js"></script>
+  <script src="js/whatsapp.js"></script>
+  <script src="js/billing.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/customers.js"></script>
+  <script src="js/sales.js"></script>
+  <script src="js/reports.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

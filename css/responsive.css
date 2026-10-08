@@ -1,0 +1,141 @@
+/* ==========================================================================
+   GUPTA GROCERY MART - POS & BILLING SYSTEM
+   responsive.css - Tablet & Mobile Adaptations
+   ========================================================================== */
+
+@media (max-width: 1200px) {
+  .pos-container {
+    grid-template-columns: 1fr 310px;
+    gap: 16px;
+  }
+
+  .stat-cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  .dashboard-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reports-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 992px) {
+  :root {
+    --sidebar-width: 240px;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.7);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pos-container {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow: visible;
+  }
+
+  .pos-left-panel {
+    height: auto;
+    overflow: visible;
+  }
+
+  .pos-right-summary {
+    height: auto;
+    overflow: visible;
+  }
+
+  .settings-layout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .top-header {
+    padding: 0 16px;
+  }
+
+  .content-viewport {
+    padding: 16px 12px;
+  }
+
+  .live-clock-badge {
+    display: none;
+  }
+
+  .cashier-info {
+    display: none;
+  }
+
+  .bill-meta-bar {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .catalog-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .toolbar-search-box {
+    min-width: 100%;
+  }
+
+  .toolbar-filters {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .settings-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-full-width {
+    grid-column: span 1;
+  }
+
+  .shortcuts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 15px;
+  }
+
+  .system-status-indicator {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+
+  .header-btn-help {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+
+  .stat-val {
+    font-size: 20px;
+  }
+
+  .btn-pos-sub-row {
+    grid-template-columns: 1fr;
+  }
+}
