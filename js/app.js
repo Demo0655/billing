@@ -37,11 +37,12 @@ const App = (() => {
   }
 
   function cacheDom() {
-    dom.sidebar = document.getElementById('sidebar');
+    dom.sidebar       = document.getElementById('sidebar');
     dom.sidebarToggle = document.getElementById('sidebar-toggle');
-    dom.navLinks = document.querySelectorAll('.nav-link');
+    dom.sidebarBackdrop = document.getElementById('sidebar-backdrop');
+    dom.navLinks      = document.querySelectorAll('.nav-link');
     dom.screenContainers = document.querySelectorAll('.app-screen');
-    dom.pageTitle = document.getElementById('page-title');
+    dom.pageTitle     = document.getElementById('page-title');
 
     dom.clockDate = document.getElementById('header-live-date');
     dom.clockTime = document.getElementById('header-live-time');
@@ -49,41 +50,75 @@ const App = (() => {
     dom.toastContainer = document.getElementById('toast-container');
 
     // Confirm Modal
-    dom.confirmModal = document.getElementById('confirm-modal');
-    dom.confirmTitle = document.getElementById('confirm-modal-title');
+    dom.confirmModal   = document.getElementById('confirm-modal');
+    dom.confirmTitle   = document.getElementById('confirm-modal-title');
     dom.confirmMessage = document.getElementById('confirm-modal-message');
-    dom.btnConfirmOk = document.getElementById('btn-confirm-ok');
+    dom.btnConfirmOk   = document.getElementById('btn-confirm-ok');
     dom.btnConfirmCancel = document.getElementById('btn-confirm-cancel');
 
     // Shortcuts Modal
     dom.btnHelpShortcuts = document.getElementById('btn-help-shortcuts');
-    dom.shortcutsModal = document.getElementById('shortcuts-modal');
+    dom.shortcutsModal   = document.getElementById('shortcuts-modal');
     dom.btnCloseShortcuts = document.getElementById('btn-close-shortcuts');
+
+    // Dashboard New Bill Banner
+    dom.btnDashboardNewBill = document.getElementById('btn-dashboard-new-bill');
+  }
+
+  // ── Mobile Sidebar Open / Close ──
+  function openSidebar() {
+    if (!dom.sidebar) return;
+    dom.sidebar.classList.add('open');
+    if (dom.sidebarBackdrop) {
+      dom.sidebarBackdrop.style.display = 'block';
+    }
+  }
+
+  function closeSidebar() {
+    if (!dom.sidebar) return;
+    dom.sidebar.classList.remove('open');
+    if (dom.sidebarBackdrop) {
+      dom.sidebarBackdrop.style.display = 'none';
+    }
   }
 
   // Navigation System
   function bindNavigation() {
+    // Nav links — navigate + close sidebar on mobile
     dom.navLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const screen = link.dataset.screen;
         if (screen) {
           navigateTo(screen);
-          // Auto close mobile sidebar
-          if (window.innerWidth <= 992 && dom.sidebar) {
-            dom.sidebar.classList.remove('open');
-          }
+          if (window.innerWidth <= 900) closeSidebar();
         }
       });
     });
 
-    if (dom.sidebarToggle && dom.sidebar) {
-      dom.sidebarToggle.addEventListener('click', () => {
-        dom.sidebar.classList.toggle('open');
+    // Hamburger button — toggle sidebar open/close
+    if (dom.sidebarToggle) {
+      dom.sidebarToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dom.sidebar && dom.sidebar.classList.contains('open')
+          ? closeSidebar()
+          : openSidebar();
       });
     }
 
-    // Direct Quick-action buttons with data-navigate
+    // Backdrop tap — close sidebar
+    if (dom.sidebarBackdrop) {
+      dom.sidebarBackdrop.addEventListener('click', closeSidebar);
+    }
+
+    // Dashboard "New Bill" banner button
+    if (dom.btnDashboardNewBill) {
+      dom.btnDashboardNewBill.addEventListener('click', () => {
+        navigateTo('billing');
+      });
+    }
+
+    // Direct Quick-action buttons with data-navigate attribute
     document.querySelectorAll('[data-navigate]').forEach(btn => {
       btn.addEventListener('click', () => {
         navigateTo(btn.dataset.navigate);
